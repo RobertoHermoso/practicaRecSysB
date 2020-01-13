@@ -151,8 +151,8 @@ def recommended_books(request):
  
 def similar_users(request):
       
-    if request.method == 'POST':
-        form = UsuarioForm(request.POST)
+    if request.method == 'GET':
+        form = UsuarioForm(request.GET, request.FILES)
         if form.is_valid():
             user = form['usuario'].value()
             usuarios = Puntuacion.objects.order_by().values('idUsuario').distinct()
