@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang='es'>
+  <head>
+	<title>Lista de películas por género</title>
+	<meta charset='utf-8'>
+  </head>
+  <body>
+  <h2>MENU:</h2>
+   <a data-hover="listado por generos(Apartado a)" href="{% url 'generos' %}">listado por generos Apartado a</a><br>
+   <a data-hover="mejores libros (Apartado b)" href="{% url 'mejores' %}">Mejores Libros Apartado b</a><br>
+   <a data-hover="Usuarios similares (Apartado c)" href="{% url 'sim' %}"> Usuario Similares (apartado c)</a><br>
+   <a data-hover="Recomendaciones de libros (Apartado d)" href="{% url 'rec' %}"> Recomendaciones de Libros (apartado d)</a>
+  <br>
+    <h1>Libros Por genero!</h1>
+{% for mykey,myvalue in res.items %}
+
+    <ul> <b>{{ mykey }}:</b>
+    {% if not myvalue %}
+        Genero sin libros
+    {% endif%}
+
+    {% for valuee in myvalue %}
+    <li>{{ valuee }}</li>
+    {% endfor %}
+    </ul>
+{% endfor %}

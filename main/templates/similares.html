@@ -1,0 +1,30 @@
+ <head>
+	<title>Lista de películas por género</title>
+	<meta charset='utf-8'>
+  </head>
+  <body>
+  <h2>MENU:</h2>
+   <a data-hover="listado por generos(Apartado a)" href="{% url 'generos' %}">listado por generos Apartado a</a><br>
+   <a data-hover="mejores libros (Apartado b)" href="{% url 'mejores' %}">Mejores Libros Apartado b</a><br>
+   <a data-hover="Usuarios similares (Apartado c)" href="{% url 'sim' %}"> Usuario Similares (apartado c)</a><br>
+   <a data-hover="Recomendaciones de libros (Apartado d)" href="{% url 'rec' %}"> Recomendaciones de Libros (apartado d)</a>
+  <br>
+
+<form action="/similar-users/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    	
+    <input type="submit" value="Submit">
+   
+</form>
+
+Películas similares para {{movie}}:
+
+<ul>
+{% for movie in movies %}
+    <li>{{movie}}</li>
+    
+{% empty %}
+    	No existe la película
+{% endfor %}
+</ul>
