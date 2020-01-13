@@ -11,16 +11,19 @@
    <a data-hover="Usuarios similares (Apartado c)" href="{% url 'sim' %}"> Usuario Similares (apartado c)</a><br>
    <a data-hover="Recomendaciones de libros (Apartado d)" href="{% url 'rec' %}"> Recomendaciones de Libros (apartado d)</a>
   <br>
-    <h1>Libros Por genero!</h1>
-{% for mykey,myvalue in res.items %}
+    <h1>Libros Por genero</h1>
 
-    <ul> <b>{{ mykey }}:</b>
+
+    <form  id="formulario" method="get" action=''>{% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Submit">
+     
+  </form>
+  {% for myvalue in books %}
+    <ul>
     {% if not myvalue %}
-        Genero sin libros
+        No hay libros
     {% endif%}
-
-    {% for valuee in myvalue %}
-    <li>{{ valuee }}</li>
-    {% endfor %}
+    <li>{{ myvalue}}</li>
     </ul>
 {% endfor %}

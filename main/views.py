@@ -180,34 +180,6 @@ def similar_users(request):
     return render(request, 'similares.html', {'form': form})
 
 
-def libro_genero_list(request):
-    generos = Genero.objects.all()
-    libros = Libro.objects.all()
-    print(generos)
-    print(libros)
-
-    print('---')
-
-    dict = {}
-
-    for genero in generos:
-        print(1)
-
-        res = []
-        for libro in libros:
-            generosdellibro = libro.generos.all()
-            for generoL in generosdellibro:
-                if (generoL == genero):
-                    if(libro.generos.all().count()>=2):
-                        res.append(str('titulo: ')+libro.titulo+str(' autor: ')+libro.autor+str(' ')+ str('generos: '+libro.generos.all()[0].nombre+str(',')+libro.generos.all()[1].nombre))
-                    else:
-                        res.append(str('titulo: ')+libro.titulo+str(' autor: ')+libro.autor+str(' ')+ str('genero: '+libro.generos.all()[0].nombre))
-
-        dict[genero]=res
-        print(dict)
-
-    return render_to_response('libro_genero_list.html', {'res': dict})
-
 
 def best_libros(request):
     libros = Libro.objects.all()
@@ -258,3 +230,23 @@ def populate():
         book = Libro.objects.get(bookId=rating['bookid'])
         book_rating = Puntuacion(idUsuario=rating['user'], bookId=book, puntuacion=rating['ratings'])
         book_rating.save()
+
+
+    
+def libro_genero_list(request):
+    books = {}
+    libros = Libro.objects.all()
+    if request.method == 'GET':
+        form = GeneroForm(request.GET, request.FILES)
+        if form.is_valid():
+            genero = form['genero'].value()
+            try:
+                books = Libro.objects.filter(genero=genero)
+                print(books)
+            except:
+                pass
+    else:
+        form = GeneroForm()
+
+
+    return render_to_response('libro_genero_list.html', {'form': form, 'books': books})
